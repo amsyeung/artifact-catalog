@@ -1,0 +1,15 @@
+{
+  "name": "artifact-catalog",
+  "description": "artifact-catalog: file each new Claude artifact in a Notion database or a pinned index artifact.",
+  "owner": {
+    "name": "amsyeung",
+    "url": "https://amsyn.org"
+  },
+  "plugins": [
+    {
+      "name": "artifact-catalog",
+      "source": "./",
+      "description": "Asks whether to file each new Claude artifact in your catalogue (a Notion database and/or an index artifact)."
+    }
+  ]
+}

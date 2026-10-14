@@ -1,0 +1,58 @@
+{
+  "name": "artifact-catalog",
+  "version": "0.1.0",
+  "description": "When Claude publishes a new artifact, asks above the prompt whether to file it in your catalogue (a Notion database and/or an index artifact).",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "notionDatabase": {
+      "type": "string",
+      "title": "Notion database",
+      "description": "URL of the Notion database that lists your artifacts. Leave empty to skip Notion.",
+      "default": ""
+    },
+    "indexArtifact": {
+      "type": "string",
+      "title": "Index artifact",
+      "description": "URL of an index artifact whose database collection \"artifacts\" lists your artifacts. Leave empty to skip it.",
+      "default": ""
+    },
+    "categories": {
+      "type": "string",
+      "title": "Categories",
+      "description": "Comma-separated categories Claude picks from when filing an artifact.",
+      "default": "Work, Clients, Personal, Other"
+    },
+    "prefixTitles": {
+      "type": "boolean",
+      "title": "Prefix titles",
+      "description": "Also rename the artifact to \"<category>｜<title>\".",
+      "default": true
+    },
+    "language": {
+      "type": "string",
+      "title": "Language",
+      "description": "Language of the prompt band and of Claude's reply when it files an artifact.",
+      "options": [
+        "en",
+        "zh-Hant",
+        "zh-Hans",
+        "ja",
+        "ko"
+      ],
+      "default": "en"
+    }
+  },
+  "author": {
+    "name": "amsyeung",
+    "url": "https://amsyn.org"
+  },
+  "homepage": "https://github.com/amsyeung/artifact-catalog",
+  "repository": "https://github.com/amsyeung/artifact-catalog",
+  "license": "MIT",
+  "keywords": [
+    "artifacts",
+    "notion",
+    "catalogue",
+    "mod"
+  ]
+}

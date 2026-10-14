@@ -1,0 +1,258 @@
+<title>Artifact Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: a filing cabinet. Category names sit in a narrow left column like drawer labels;
+     the drawer's contents run to the right, one hairline row per artifact. */
+  :root {
+    --paper: #f5f6f4;
+    --sheet: #ffffff;
+    --ink: #1d2230;
+    --muted: #6b7180;
+    --rule: #dfe2e6;
+    --ai: #2c4a7c;          /* 藍 indigo, the one accent */
+    --ai-soft: #e6ecf5;
+    --display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Noto Serif TC", serif;
+    --body: "Zen Kaku Gothic New", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14171e; --sheet: #1b1f28; --ink: #e7e9ee; --muted: #9298a6;
+      --rule: #2b303b; --ai: #8fb0e6; --ai-soft: #222c3e; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14171e; --sheet: #1b1f28; --ink: #e7e9ee; --muted: #9298a6;
+    --rule: #2b303b; --ai: #8fb0e6; --ai-soft: #222c3e; color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.6;
+    padding-inline: 16px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding-block: 48px 72px; display: grid; gap: 40px; }
+
+  header { display: grid; gap: 14px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(32px, 6vw, 48px);
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+  .lede { margin: 0; color: var(--muted); max-width: 60ch; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline;
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
+  }
+  .meta a { color: var(--ai); text-decoration: none; border-bottom: 1px solid currentColor; }
+  .meta a:hover { border-bottom-width: 2px; }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  .search {
+    flex: 1 1 220px; min-width: 0;
+    font: inherit; color: var(--ink);
+    background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 9px 12px;
+  }
+  .search:focus-visible { outline: 2px solid var(--ai); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font: 500 13px/1 var(--body); color: var(--muted);
+    background: transparent; border: 1px solid var(--rule); border-radius: 999px;
+    padding: 7px 12px; cursor: pointer;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--muted); }
+  .chip[aria-pressed="true"] { color: var(--ai); background: var(--ai-soft); border-color: var(--ai); }
+  .chip:focus-visible { outline: 2px solid var(--ai); outline-offset: 2px; }
+
+  .drawers { display: grid; gap: 36px; }
+  .drawer {
+    display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 24px;
+    border-top: 1px solid var(--ink); padding-top: 14px;
+  }
+  .label { display: grid; gap: 2px; align-content: start; }
+  .label h2 { font-family: var(--display); font-weight: 500; font-size: 22px; margin: 0; line-height: 1.3; }
+  .label span { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .rows { list-style: none; margin: 0; padding: 0; display: grid; }
+  .row { border-bottom: 1px solid var(--rule); }
+  .row:last-child { border-bottom: 0; }
+  .row a {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px;
+    padding: 12px 0; color: inherit; text-decoration: none;
+  }
+  .row a:hover .title, .row a:focus-visible .title { color: var(--ai); }
+  .row a:focus-visible { outline: 2px solid var(--ai); outline-offset: 2px; border-radius: 2px; }
+  .title { font-weight: 500; font-size: 16px; transition: color .15s; }
+  .summary { grid-column: 1; color: var(--muted); font-size: 14px; }
+  .side {
+    grid-column: 2; grid-row: 1 / span 2; align-self: center;
+    display: grid; justify-items: end; gap: 4px;
+    font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .kind {
+    font-family: var(--body); font-size: 11px; letter-spacing: 0.08em;
+    border: 1px solid var(--rule); border-radius: 3px; padding: 1px 6px;
+  }
+
+  .state {
+    border: 1px dashed var(--rule); border-radius: 6px; padding: 28px 20px;
+    color: var(--muted); text-align: center; background: var(--sheet);
+  }
+  .state strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding-block: 32px 56px; gap: 32px; }
+    .drawer { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .label { grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 10px; }
+    .row a { grid-template-columns: minmax(0, 1fr); }
+    .side { grid-column: 1; grid-row: auto; justify-items: start; grid-auto-flow: column; justify-content: start; gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .title { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Artifact Index</h1>
+    <p class="lede">Reports, plans and pages Claude made for me, grouped by category. Each row opens the artifact.</p>
+    <div class="meta">
+      <span id="count">Loading…</span>
+      <span id="latest"></span>
+    </div>
+  </header>
+
+  <div class="tools">
+    <input id="q" class="search" type="search" placeholder="Search titles and summaries" aria-label="Search titles and summaries">
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+  </div>
+
+  <main id="list" class="drawers" aria-live="polite">
+    <div class="state"><strong>Loading the index</strong>Connecting to this artifact's database…</div>
+  </main>
+</div>
+
+<script>
+  // Category order: list your categories here to fix their order; anything else follows alphabetically.
+  const ORDER = [];
+  const KIND = { doc: 'Doc', page: 'Page' };
+
+  let items = [];
+  let active = null;
+  let query = '';
+  try { active = localStorage.getItem('cat') || null; } catch (e) {}
+
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  function categories() {
+    const seen = new Set(items.map((i) => i.category || 'Other'));
+    return [...ORDER.filter((c) => seen.has(c)), ...[...seen].filter((c) => !ORDER.includes(c)).sort()];
+  }
+
+  function renderChips() {
+    const box = $('chips');
+    box.replaceChildren();
+    const make = (label, value) => {
+      const b = el('button', 'chip', label);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', String(active === value));
+      b.addEventListener('click', () => {
+        active = value;
+        try { value ? localStorage.setItem('cat', value) : localStorage.removeItem('cat'); } catch (e) {}
+        render();
+      });
+      return b;
+    };
+    box.append(make('All', null));
+    for (const c of categories()) box.append(make(c, c));
+  }
+
+  function state(title, body) {
+    const d = el('div', 'state');
+    d.append(el('strong', null, title), document.createTextNode(body));
+    $('list').replaceChildren(d);
+  }
+
+  function render() {
+    const cats = categories();
+    if (active && !cats.includes(active)) active = null;
+    renderChips();
+
+    $('count').textContent = items.length + (items.length === 1 ? ' artifact' : ' artifacts') + ' · ' + cats.length + (cats.length === 1 ? ' category' : ' categories');
+    const newest = items.map((i) => i.updated || '').sort().pop();
+    $('latest').textContent = newest ? 'Last updated ' + newest : '';
+
+    if (!items.length) {
+      state('Nothing here yet', 'Press Add the next time Claude offers to file a new artifact, and it shows up here.');
+      return;
+    }
+
+    const q = query.trim().toLowerCase();
+    const match = (i) => !q || (i.title + ' ' + (i.summary || '')).toLowerCase().includes(q);
+    const list = $('list');
+    list.replaceChildren();
+
+    for (const c of cats) {
+      if (active && c !== active) continue;
+      const rows = items
+        .filter((i) => (i.category || 'Other') === c && match(i))
+        .sort((a, b) => (b.updated || '').localeCompare(a.updated || ''));
+      if (!rows.length) continue;
+
+      const sec = el('section', 'drawer');
+      const label = el('div', 'label');
+      label.append(el('h2', null, c), el('span', null, rows.length + (rows.length === 1 ? ' artifact' : ' artifacts')));
+      const ul = el('ul', 'rows');
+      for (const i of rows) {
+        const li = el('li', 'row');
+        const a = el('a');
+        a.href = i.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        const side = el('div', 'side');
+        side.append(el('span', 'kind', KIND[i.kind] || 'Page'), el('span', null, i.updated || ''));
+        a.append(el('span', 'title', i.title), side, el('span', 'summary', i.summary || ''));
+        li.append(a);
+        ul.append(li);
+      }
+      sec.append(label, ul);
+      list.append(sec);
+    }
+    if (!list.children.length) state('No matches', 'Try another word, or pick All.');
+  }
+
+  $('q').addEventListener('input', (e) => { query = e.target.value; render(); });
+
+  (async () => {
+    const db = window.claude?.use ? await window.claude.use('db') : null;
+    if (!db) {
+      $('count').textContent = 'Unavailable';
+      state('Can't read the index', 'Sign in to claude.ai and open this page again.');
+      return;
+    }
+    db.collection('artifacts').onSnapshot(
+      (snap) => {
+        items = snap.docs.filter((d) => d.exists).map((d) => ({ id: d.id, ...d.data() }))
+          .filter((i) => typeof i.title === 'string' && typeof i.url === 'string' && /^https:\/\/claude\.ai\//.test(i.url));
+        render();
+      },
+      () => state('Connection lost', 'Reload the page to try again.')
+    );
+  })();
+</script>
