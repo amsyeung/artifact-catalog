@@ -25,7 +25,7 @@ At the prompt of a Claude Code terminal session:
 /plugin install artifact-catalog --marketplace amsyeung/artifact-catalog
 ```
 
-Answer `y` to add the marketplace, then pick a scope (user scope is the usual choice). The install screen asks for the options below; all of them can stay empty and be set later.
+Answer `y` to add the marketplace, then pick a scope (user scope is the usual choice). The install asks for the options below. All of them can stay empty and be set later.
 
 Tested with Claude Code 2.1.295. The mod needs a build that runs hooks modules (mods).
 
@@ -41,20 +41,10 @@ Tested with Claude Code 2.1.295. The mod needs a build that runs hooks modules (
 
 With neither `notionDatabase` nor `indexArtifact` set, pressing **Add** makes Claude ask where you want artifacts filed.
 
-Change options in `/config`, or in `~/.claude/settings.json`:
+Change them later with:
 
-```json
-{
-  "pluginConfigs": {
-    "artifact-catalog": {
-      "options": {
-        "indexArtifact": "https://claude.ai/artifact/…",
-        "categories": "Work, Clients, YouTube, Side projects, Other",
-        "language": "en"
-      }
-    }
-  }
-}
+```
+/plugin configure artifact-catalog@artifact-catalog
 ```
 
 ## Setting up the catalogue
